@@ -5,9 +5,9 @@
 
 bool UWComputer2::CheckAnswer()
 {
-	if (AnswerText)
+	if (AnswerBox)
 	{
-		return FText::TrimPrecedingAndTrailing(AnswerText->Text).EqualTo(FText::FromString("16"));
+		return AnswerBox->Value == 16;
 	}
 	return false;
 }

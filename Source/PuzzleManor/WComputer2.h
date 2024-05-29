@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "TriggerWidget.h"
-#include "Components/EditableText.h"
+#include "Components/SpinBox.h"
 
 #include "WComputer2.generated.h"
 
@@ -21,5 +21,5 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	UEditableText* AnswerText;
+	USpinBox* AnswerBox;
 };
