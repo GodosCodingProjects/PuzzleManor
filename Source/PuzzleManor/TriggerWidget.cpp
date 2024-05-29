@@ -34,6 +34,7 @@ void UTriggerWidget::OnSubmit()
 				if (Activatable)
 				{
 					Activatable->StartActivation();
+					Disable();
 				}
 			}
 		}
@@ -41,11 +42,6 @@ void UTriggerWidget::OnSubmit()
 }
 
 void UTriggerWidget::OnClose()
-{
-	Disable();
-}
-
-void UTriggerWidget::Disable()
 {
 	RemoveFromViewport();
 
@@ -55,4 +51,11 @@ void UTriggerWidget::Disable()
 	Player->SetInputMode(GameMode);
 	FSlateApplication::Get().SetAllUserFocusToGameViewport();
 	Player->bShowMouseCursor = false;
+}
+
+void UTriggerWidget::Disable()
+{
+	OnClose();
+
+	IsSolved = true;
 }

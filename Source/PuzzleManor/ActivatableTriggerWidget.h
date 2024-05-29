@@ -9,6 +9,13 @@
 
 #include "ActivatableTriggerWidget.generated.h"
 
+USTRUCT()
+struct FActivatableActors
+{
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere)
+	TArray<AActor*> ActivatableActors;
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PUZZLEMANOR_API UActivatableTriggerWidget : public UActorComponent, public IActivatable
@@ -23,10 +30,12 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UTriggerWidget> WidgetClass;
-
-	UTriggerWidget* WidgetInstance;
+	TArray<TSubclassOf<UTriggerWidget>> WidgetClasses;
 
 	UPROPERTY(EditAnywhere)
-	TArray<AActor*> ActivatableActors;
+	TArray<FActivatableActors> ActivatableActorsList;
+
+private:
+	UTriggerWidget* CurrentWidget;
+	size_t i;
 };

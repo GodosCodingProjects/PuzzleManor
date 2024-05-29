@@ -15,29 +15,27 @@ UActivatableTriggerWidget::UActivatableTriggerWidget()
 
 void UActivatableTriggerWidget::StartActivation()
 {
-	if (WidgetClass)
+	auto Player = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (Player)
 	{
-		auto Player = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-		if (Player)
+		if ((!CurrentWidget || CurrentWidget->IsSolved) && i < WidgetClasses.Num())
 		{
-			if (!WidgetInstance)
-			{
-				WidgetInstance = CreateWidget<UTriggerWidget>(Player, WidgetClass);
-				WidgetInstance->ActivatableActors = ActivatableActors;
-			}
+			CurrentWidget = CreateWidget<UTriggerWidget>(Player, WidgetClasses[i]);
+			CurrentWidget->ActivatableActors = ActivatableActorsList[i].ActivatableActors;
+			++i;
+		}
 			
-			if (WidgetInstance)
-			{
-				FInputModeGameAndUI Mode;
-				Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-				Mode.SetHideCursorDuringCapture(false);
-				Mode.SetWidgetToFocus(WidgetInstance->GetCachedWidget());
+		if (CurrentWidget && !CurrentWidget->IsSolved)
+		{
+			FInputModeGameAndUI Mode;
+			Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+			Mode.SetHideCursorDuringCapture(false);
+			Mode.SetWidgetToFocus(CurrentWidget->GetCachedWidget());
 
-				Player->SetInputMode(Mode);
-				Player->bShowMouseCursor = true;
+			Player->SetInputMode(Mode);
+			Player->bShowMouseCursor = true;
 
-				WidgetInstance->AddToViewport(2);
-			}
+			CurrentWidget->AddToViewport(2);
 		}
 	}
 }

@@ -39,4 +39,6 @@ public:
 	UButton* XButton;
 
 	TArray<AActor*> ActivatableActors;
+
+	bool IsSolved = false;
 };
