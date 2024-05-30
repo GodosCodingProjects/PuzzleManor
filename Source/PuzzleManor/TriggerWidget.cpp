@@ -34,10 +34,11 @@ void UTriggerWidget::OnSubmit()
 				if (Activatable)
 				{
 					Activatable->StartActivation();
-					Disable();
 				}
 			}
 		}
+
+		Disable();
 	}
 }
 
