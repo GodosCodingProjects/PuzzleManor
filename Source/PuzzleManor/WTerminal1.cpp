@@ -5,5 +5,9 @@
 
 bool UWTerminal1::CheckAnswer()
 {
-    return true;
+	if (AnswerBox)
+	{
+		return AnswerBox->Value == 69;
+	}
+	return false;
 }

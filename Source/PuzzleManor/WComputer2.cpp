@@ -7,7 +7,7 @@ bool UWComputer2::CheckAnswer()
 {
 	if (AnswerBox)
 	{
-		return AnswerBox->Value == 16;
+		return AnswerBox->Value == 420;
 	}
 	return false;
 }

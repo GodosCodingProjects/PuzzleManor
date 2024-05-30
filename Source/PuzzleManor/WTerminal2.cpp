@@ -7,7 +7,7 @@ bool UWTerminal2::CheckAnswer()
 {
 	if (AnswerText)
 	{
-		return FText::TrimPrecedingAndTrailing(AnswerText->Text).ToLower().EqualTo(FText::FromString("mozart"));
+		return FText::TrimPrecedingAndTrailing(AnswerText->Text).ToLower().EqualTo(FText::FromString("osiris"));
 	}
 	return false;
 }
