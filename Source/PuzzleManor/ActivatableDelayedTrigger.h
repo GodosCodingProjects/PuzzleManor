@@ -6,13 +6,13 @@
 #include "Trigger.h"
 #include "Activatable.h"
 
-#include "ActivatableTrigger.generated.h"
+#include "ActivatableDelayedTrigger.generated.h"
 
 /**
  * 
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class PUZZLEMANOR_API UActivatableTrigger : public UTrigger, public IActivatable
+class PUZZLEMANOR_API UActivatableDelayedTrigger : public UTrigger, public IActivatable
 {
 	GENERATED_BODY()
 

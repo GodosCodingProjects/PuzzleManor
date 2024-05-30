@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ActivatableTrigger.h"
+#include "ActivatableDelayedTrigger.h"
 
-void UActivatableTrigger::BeginPlay()
+void UActivatableDelayedTrigger::BeginPlay()
 {
 	Super::BeginPlay();
 
 	SetComponentTickEnabled(false);
 }
 
-void UActivatableTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UActivatableDelayedTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -23,7 +23,7 @@ void UActivatableTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	}
 }
 
-void UActivatableTrigger::StartActivation()
+void UActivatableDelayedTrigger::StartActivation()
 {
 	if (!IsActivated)
 	{
