@@ -13,6 +13,7 @@ USTRUCT()
 struct FActivatableActors
 {
 	GENERATED_BODY()
+
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> ActivatableActors;
 };

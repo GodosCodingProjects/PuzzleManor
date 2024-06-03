@@ -5,9 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include "ClickTrigger.h"
 
 #include "PuzzleManorCharacter.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActorEventSignature,AActor*,ViewedActor);
 
 UCLASS()
 class PUZZLEMANOR_API APuzzleManorCharacter : public ACharacter
@@ -19,9 +20,6 @@ public:
 	APuzzleManorCharacter();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	void MoveFB(float Value);
 	void MoveRL(float Value);
 	void Rotate(float Value);
@@ -40,6 +38,10 @@ public:
 public:
 	UPROPERTY(BlueprintReadOnly)
 	AActor* ViewedActor = nullptr;
+
+	FActorEventSignature OnInteract;
+	FActorEventSignature OnViewStart;
+	FActorEventSignature OnViewEnd;
 
 private:
 	UPROPERTY(EditAnywhere)

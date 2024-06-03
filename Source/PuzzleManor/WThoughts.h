@@ -18,9 +18,10 @@ class PUZZLEMANOR_API UWThoughts : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	virtual void OnWidgetRebuilt() override;
 
-	void SetText();
+	UFUNCTION()
+	void OnViewUpdated(AActor* ViewedActor);
 
 public:
 	UPROPERTY(EditAnywhere,	meta = (BindWidget))

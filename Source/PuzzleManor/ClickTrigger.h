@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Trigger.h"
+#include "Kismet/GameplayStatics.h"
+#include "PuzzleManorCharacter.h"
+
 #include "ClickTrigger.generated.h"
 
 /**
@@ -15,6 +18,8 @@ class PUZZLEMANOR_API UClickTrigger : public UTrigger
 	GENERATED_BODY()
 	
 public:
-	
+	void BeginPlay() override;
 
+	UFUNCTION()
+	void OnInteracted(AActor* ViewedActor);
 };

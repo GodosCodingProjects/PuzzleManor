@@ -13,13 +13,6 @@ APuzzleManorCharacter::APuzzleManorCharacter()
 	Camera->SetupAttachment(RootComponent);
 }
 
-// Called when the game starts or when spawned
-void APuzzleManorCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 void APuzzleManorCharacter::MoveFB(float Value)
 {
 	AddMovementInput(GetActorForwardVector(), Value * MoveSpeed);
@@ -50,11 +43,7 @@ void APuzzleManorCharacter::Interact(FKey key)
 {
 	if (ViewedActor)
 	{
-		auto Trigger = ViewedActor->FindComponentByClass<UClickTrigger>();
-		if (Trigger)
-		{
-			Trigger->Trigger();
-		}
+		OnInteract.Broadcast(ViewedActor);
 	}
 }
 
@@ -71,11 +60,19 @@ void APuzzleManorCharacter::UpdateView()
 
 	if (hit.IsValidBlockingHit())
 	{
-		ViewedActor = hit.GetActor();
+		if (ViewedActor != hit.GetActor())
+		{
+			ViewedActor = hit.GetActor();
+			OnViewStart.Broadcast(ViewedActor);
+		}
 	}
 	else
 	{
-		ViewedActor = nullptr;
+		if (ViewedActor)
+		{
+			ViewedActor = nullptr;
+			OnViewEnd.Broadcast(ViewedActor);
+		}
 	}
 }
 

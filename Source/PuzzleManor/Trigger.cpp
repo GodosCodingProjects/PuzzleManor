@@ -25,6 +25,10 @@ void UTrigger::Trigger()
 					Activatable->StartActivation();
 				}
 			}
+
+			if (ActivatableActor->Implements<UActivatable>()) {
+				Cast<IActivatable>(ActivatableActor)->StartActivation();
+			}
 		}
 
 		IsEnabled = CanRetrigger;

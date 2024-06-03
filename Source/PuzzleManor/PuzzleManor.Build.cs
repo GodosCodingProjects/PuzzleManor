@@ -1,5 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+using System.IO;
 using UnrealBuildTool;
 
 public class PuzzleManor : ModuleRules
@@ -15,7 +16,8 @@ public class PuzzleManor : ModuleRules
 			"Engine", 
 			"InputCore", 
 			"EnhancedInput",
-			"UMG"
+			"UMG",
+			"Niagara"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

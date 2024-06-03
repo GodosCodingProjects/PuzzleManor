@@ -8,22 +8,25 @@
 #include "Kismet/GameplayStatics.h"
 
 
-void UWThoughts::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+void UWThoughts::OnWidgetRebuilt()
 {
-	UUserWidget::NativeTick(MyGeometry, InDeltaTime);
+	Super::OnWidgetRebuilt();
 
-	SetText();
+	auto Player = Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (Player)
+	{
+		Player->OnViewEnd.AddUniqueDynamic(this, &UWThoughts::OnViewUpdated);
+		Player->OnViewStart.AddUniqueDynamic(this, &UWThoughts::OnViewUpdated);
+	}
 }
 
-void UWThoughts::SetText()
+void UWThoughts::OnViewUpdated(AActor* ViewedActor)
 {
 	bool HasText = false;
 
-	auto Player = Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (Player && Player->ViewedActor)
+	if (ViewedActor)
 	{
-		auto Lookable = Player->ViewedActor->FindComponentByClass<ULookable>();
-
+		auto Lookable = ViewedActor->FindComponentByClass<ULookable>();
 		if (Lookable && !Lookable->Thoughts.IsEmpty())
 		{
 			HasText = true;
