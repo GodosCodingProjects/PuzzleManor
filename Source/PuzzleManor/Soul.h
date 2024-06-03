@@ -31,6 +31,14 @@ public:
 	void OnInteract(AActor* ViewedActor);
 
 private:
+	void StartMove(FVector MoveTo);
+
+	void IdentifySoul();
+
+	void KillPlayer();
+
+	void SetCompleted();
+
 	FVector ExpDecay(FVector a, FVector b, float decay, float dt);
 
 public:
@@ -57,6 +65,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float Decay = 16;
+
+	UPROPERTY(EditAnywhere)
+	AActor* CompleteActivatable;
 
 private:
 	enum SoulState {

@@ -37,47 +37,34 @@ void ASoul::Tick(float DeltaTime)
 		case Unknown:
 			if (DesiredPosition == OsirisPosition)
 			{
-				SetActorTickEnabled(true);
-				DesiredPosition = WaitingPosition;
-
-				State = (SoulState)FMath::RandRange(1, 2);
-
-				auto NS = FindComponentByClass<UNiagaraComponent>();
-				NS->SetColorParameter(
-					FName("CurrentColor"),
-					(State == Good)? FLinearColor(0.f, 0.f, 1.f) : FLinearColor(1.f, 0.f, 0.f)
-				);
+				IdentifySoul();
+				StartMove(WaitingPosition);
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				// TODO: Kill the player
-				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
+				KillPlayer();
 			}
 			break;
 
 		case Good:
 			if (DesiredPosition == AnubisPosition)
 			{
-				// TODO: Activate stuff
-				State = Complete;
+				SetCompleted();
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				// TODO: Kill the player
-				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
+				KillPlayer();
 			}
 			break;
 
 		case Bad:
 			if (DesiredPosition == AmmitPosition)
 			{
-				// TODO: Activate stuff
-				State = Complete;
+				SetCompleted();
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				// TODO: Kill the player
-				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
+				KillPlayer();
 			}
 		}
 	}
@@ -92,8 +79,7 @@ void ASoul::StartActivation()
 	}
 	
 
-	SetActorTickEnabled(true);
-	DesiredPosition = WaitingPosition;
+	StartMove(WaitingPosition);
 }
 
 void ASoul::OnInteract(AActor* ViewedActor)
@@ -102,18 +88,50 @@ void ASoul::OnInteract(AActor* ViewedActor)
 	{
 		if (ViewedActor == Osiris && State == Unknown)
 		{
-			SetActorTickEnabled(true);
-			DesiredPosition = OsirisPosition;
+			StartMove(OsirisPosition);
 		}
 		else if (ViewedActor == Anubis)
 		{
-			SetActorTickEnabled(true);
-			DesiredPosition = AnubisPosition;
+			StartMove(AnubisPosition);
 		}
 		else if (ViewedActor == Ammit)
 		{
-			SetActorTickEnabled(true);
-			DesiredPosition = AmmitPosition;
+			StartMove(AmmitPosition);
+		}
+	}
+}
+
+void ASoul::StartMove(FVector MoveTo)
+{
+	SetActorTickEnabled(true);
+	DesiredPosition = MoveTo;
+}
+
+void ASoul::IdentifySoul()
+{
+	State = (SoulState)FMath::RandRange(1, 2);
+
+	auto NS = FindComponentByClass<UNiagaraComponent>();
+	NS->SetColorParameter(
+		FName("CurrentColor"),
+		(State == Good) ? FLinearColor(0.f, 0.f, 1.f) : FLinearColor(1.f, 0.f, 0.f)
+	);
+}
+
+void ASoul::KillPlayer()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
+}
+
+void ASoul::SetCompleted()
+{
+	State = Complete;
+	auto Components = CompleteActivatable->GetComponentsByInterface(UActivatable::StaticClass());
+	for (auto Component : Components) {
+		auto Activatable = Cast<IActivatable>(Component);
+		if (Activatable)
+		{
+			Activatable->StartActivation();
 		}
 	}
 }
