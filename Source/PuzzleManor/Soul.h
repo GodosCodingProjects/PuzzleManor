@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "NiagaraSystemInstance.h"
 #include "Activatable.h"
 
 #include "Soul.generated.h"

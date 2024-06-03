@@ -5,6 +5,7 @@
 #include "Soul.h"
 #include "Kismet/GameplayStatics.h"
 #include "PuzzleManorCharacter.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ASoul::ASoul()
@@ -34,44 +35,49 @@ void ASoul::Tick(float DeltaTime)
 
 		switch (State) {
 		case Unknown:
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Unknown State"));
 			if (DesiredPosition == OsirisPosition)
 			{
 				SetActorTickEnabled(true);
 				DesiredPosition = WaitingPosition;
-				// TODO: Randomize a new state for the soul (and update color)
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Randomizing the soul's state"));
-				State = Good;
+
+				State = (SoulState)FMath::RandRange(1, 2);
+
+				auto NS = FindComponentByClass<UNiagaraComponent>();
+				NS->SetColorParameter(
+					FName("CurrentColor"),
+					(State == Good)? FLinearColor(0.f, 0.f, 1.f) : FLinearColor(1.f, 0.f, 0.f)
+				);
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("DEAD"));
+				// TODO: Kill the player
+				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
 			}
 			break;
 
 		case Good:
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Good State"));
 			if (DesiredPosition == AnubisPosition)
 			{
 				// TODO: Activate stuff
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Soul was good"));
+				State = Complete;
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("DEAD"));
+				// TODO: Kill the player
+				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
 			}
 			break;
 
 		case Bad:
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Bad State"));
 			if (DesiredPosition == AmmitPosition)
 			{
 				// TODO: Activate stuff
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Soul was bad"));
+				State = Complete;
 			}
 			else if (DesiredPosition != WaitingPosition)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("DEAD"));
+				// TODO: Kill the player
+				UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
 			}
 		}
 	}
@@ -92,30 +98,20 @@ void ASoul::StartActivation()
 
 void ASoul::OnInteract(AActor* ViewedActor)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("State: " + FString::FromInt(State)));
-
 	if (State != Complete && GetActorLocation().Equals(DesiredPosition, TOLERANCE))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Ready"));
-
-		if (ViewedActor == Osiris)
+		if (ViewedActor == Osiris && State == Unknown)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Osiris"));
-			// TODO: Move the soul to osiris position
 			SetActorTickEnabled(true);
 			DesiredPosition = OsirisPosition;
 		}
 		else if (ViewedActor == Anubis)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Anubis"));
-			// TODO: Move the soul to anubis position
 			SetActorTickEnabled(true);
 			DesiredPosition = AnubisPosition;
 		}
 		else if (ViewedActor == Ammit)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, TEXT("Ammit"));
-			// TODO: Move the soul to Ammit position
 			SetActorTickEnabled(true);
 			DesiredPosition = AmmitPosition;
 		}
