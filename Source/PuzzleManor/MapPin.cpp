@@ -21,6 +21,15 @@ void AMapPin::OnInteract(AActor* ViewedActor, FVector ViewIntersection)
 	}
 }
 
+void AMapPin::StartActivation()
+{
+	auto Player = Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (Player)
+	{
+		Player->OnInteract.RemoveDynamic(this, &AMapPin::OnInteract);
+	}
+}
+
 // Called when the game starts or when spawned
 void AMapPin::BeginPlay()
 {

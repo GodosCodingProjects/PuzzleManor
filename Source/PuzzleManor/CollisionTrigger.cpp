@@ -19,7 +19,7 @@ void UCollisionTrigger::BeginPlay()
 
 void UCollisionTrigger::OnCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->StaticClass() == TriggeringClass)
+	if (OtherActor->IsA(TriggeringClass))
 	{
 		Trigger();
 	}

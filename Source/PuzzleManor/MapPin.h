@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Activatable.h"
+
 #include "MapPin.generated.h"
 
 UCLASS()
-class PUZZLEMANOR_API AMapPin : public AActor
+class PUZZLEMANOR_API AMapPin : public AActor, public IActivatable
 {
 	GENERATED_BODY()
 	
@@ -17,6 +19,8 @@ public:
 
 	UFUNCTION()
 	void OnInteract(AActor* ViewedActor, FVector ViewIntersection);
+
+	virtual void StartActivation() override;
 
 protected:
 	// Called when the game starts or when spawned
