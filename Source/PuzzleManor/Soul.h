@@ -28,7 +28,7 @@ public:
 	virtual void StartActivation() override;
 
 	UFUNCTION()
-	void OnInteract(AActor* ViewedActor);
+	void OnInteract(AActor* ViewedActor, FVector ViewIntersection);
 
 private:
 	void StartMove(FVector MoveTo);

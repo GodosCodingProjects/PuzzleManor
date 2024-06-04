@@ -21,5 +21,5 @@ public:
 	void BeginPlay() override;
 
 	UFUNCTION()
-	void OnInteracted(AActor* ViewedActor);
+	void OnInteracted(AActor* ViewedActor, FVector ViewIntersection);
 };

@@ -82,7 +82,7 @@ void ASoul::StartActivation()
 	StartMove(WaitingPosition);
 }
 
-void ASoul::OnInteract(AActor* ViewedActor)
+void ASoul::OnInteract(AActor* ViewedActor, FVector ViewIntersection)
 {
 	if (State != Complete && GetActorLocation().Equals(DesiredPosition, TOLERANCE))
 	{

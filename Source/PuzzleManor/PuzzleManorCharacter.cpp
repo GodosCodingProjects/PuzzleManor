@@ -43,7 +43,7 @@ void APuzzleManorCharacter::Interact(FKey key)
 {
 	if (ViewedActor)
 	{
-		OnInteract.Broadcast(ViewedActor);
+		OnInteract.Broadcast(ViewedActor, ViewIntersection);
 	}
 }
 
@@ -63,15 +63,17 @@ void APuzzleManorCharacter::UpdateView()
 		if (ViewedActor != hit.GetActor())
 		{
 			ViewedActor = hit.GetActor();
-			OnViewStart.Broadcast(ViewedActor);
+			OnViewStart.Broadcast(ViewedActor, ViewIntersection);
 		}
+
+		ViewIntersection = hit.ImpactPoint;
 	}
 	else
 	{
 		if (ViewedActor)
 		{
 			ViewedActor = nullptr;
-			OnViewEnd.Broadcast(ViewedActor);
+			OnViewEnd.Broadcast(ViewedActor, ViewIntersection);
 		}
 	}
 }

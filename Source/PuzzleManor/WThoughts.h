@@ -21,7 +21,7 @@ public:
 	virtual void OnWidgetRebuilt() override;
 
 	UFUNCTION()
-	void OnViewUpdated(AActor* ViewedActor);
+	void OnViewUpdated(AActor* ViewedActor, FVector ViewIntersection);
 
 public:
 	UPROPERTY(EditAnywhere,	meta = (BindWidget))

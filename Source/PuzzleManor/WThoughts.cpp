@@ -20,7 +20,7 @@ void UWThoughts::OnWidgetRebuilt()
 	}
 }
 
-void UWThoughts::OnViewUpdated(AActor* ViewedActor)
+void UWThoughts::OnViewUpdated(AActor* ViewedActor, FVector ViewIntersection)
 {
 	bool HasText = false;
 

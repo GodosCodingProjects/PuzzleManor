@@ -8,7 +8,7 @@
 
 #include "PuzzleManorCharacter.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActorEventSignature,AActor*,ViewedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActorEventSignature, AActor*, ViewedActor, FVector, ViewIntersection);
 
 UCLASS()
 class PUZZLEMANOR_API APuzzleManorCharacter : public ACharacter
@@ -36,8 +36,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
-	UPROPERTY(BlueprintReadOnly)
 	AActor* ViewedActor = nullptr;
+	FVector ViewIntersection;
 
 	FActorEventSignature OnInteract;
 	FActorEventSignature OnViewStart;
