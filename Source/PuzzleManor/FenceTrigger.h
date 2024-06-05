@@ -25,7 +25,7 @@ public:
 	TArray<AActor*> Candles;
 
 private:
-	TArray<int> ExpectedCandleRotations = {
+	const TArray<int> ExpectedCandleRotations = {
 		3,
 		2,
 		1,

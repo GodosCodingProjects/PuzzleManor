@@ -27,7 +27,7 @@ public:
 	UUniformGridPanel* Grid;
 
 private:
-	ECheckBoxState Answer[16] = {
+	const ECheckBoxState Answer[16] = {
 		ECheckBoxState::Unchecked, ECheckBoxState::Checked, ECheckBoxState::Unchecked, ECheckBoxState::Unchecked,
 		ECheckBoxState::Unchecked, ECheckBoxState::Unchecked, ECheckBoxState::Checked, ECheckBoxState::Unchecked,
 		ECheckBoxState::Checked, ECheckBoxState::Unchecked, ECheckBoxState::Unchecked, ECheckBoxState::Unchecked,
