@@ -12,7 +12,7 @@ UTrigger::UTrigger()
 
 void UTrigger::Trigger()
 {
-	if (IsEnabled)
+	if (IsEnabled && TimeSinceLastTrigger >= TriggerCooldown)
 	{
 		for (auto ActivatableActor : ActivatableActors)
 		{
@@ -32,5 +32,17 @@ void UTrigger::Trigger()
 		}
 
 		IsEnabled = CanRetrigger;
+
+		if (CanRetrigger)
+		{
+			TimeSinceLastTrigger = 0.0f;
+		}
 	}
+}
+
+void UTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	TimeSinceLastTrigger += DeltaTime;
 }

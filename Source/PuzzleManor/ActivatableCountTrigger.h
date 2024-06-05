@@ -23,6 +23,5 @@ public:
 	UPROPERTY(EditAnywhere)
 	int CountTo = 1;
 
-private:
 	int Counter = 0;
 };

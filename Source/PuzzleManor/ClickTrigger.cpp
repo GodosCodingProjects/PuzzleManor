@@ -15,7 +15,7 @@ void UClickTrigger::BeginPlay()
 }
 
 void UClickTrigger::OnInteracted(AActor* ViewedActor, FVector ViewIntersection)
-{
+{;
 	if (ViewedActor == GetOwner())
 	{
 		Trigger();

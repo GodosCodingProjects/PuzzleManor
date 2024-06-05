@@ -32,10 +32,12 @@ void UActivatableMove::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	float ClampedDelta = FMath::Min(DeltaTime, AnimationTime - AnimationTimer);
+
 	if (AnimationTime > 0.0)
 	{
-		GetOwner()->AddActorWorldOffset(TranslationSpeed * DeltaTime);
-		GetOwner()->AddActorWorldRotation(RotationSpeed * DeltaTime);
+		GetOwner()->AddActorWorldOffset(TranslationSpeed * ClampedDelta);
+		GetOwner()->AddActorWorldRotation(RotationSpeed * ClampedDelta);
 	}
 	else
 	{
@@ -47,6 +49,7 @@ void UActivatableMove::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	if (AnimationTimer >= AnimationTime)
 	{
 		SetComponentTickEnabled(false);
+		IsActivated = false;
 	}
 }
 
@@ -54,6 +57,7 @@ void UActivatableMove::StartActivation()
 {
 	if (!IsActivated)
 	{
+		AnimationTimer = 0.0f;
 		IsActivated = true;
 		SetComponentTickEnabled(true);
 	}

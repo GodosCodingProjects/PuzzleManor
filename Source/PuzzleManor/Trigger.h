@@ -19,6 +19,8 @@ public:
 
 	void Trigger();
 
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 public:
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> ActivatableActors;
@@ -28,4 +30,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool CanRetrigger = false;
+
+	UPROPERTY(EditAnywhere)
+	float TriggerCooldown = 0.0f;
+
+private:
+	float TimeSinceLastTrigger = 0.0f;
+	bool IsTriggerReady = true;
 };
