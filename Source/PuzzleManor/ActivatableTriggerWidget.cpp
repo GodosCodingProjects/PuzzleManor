@@ -3,6 +3,7 @@
 
 #include "ActivatableTriggerWidget.h"
 #include "GameFramework/PlayerController.h"
+#include "PuzzleManorCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -34,6 +35,8 @@ void UActivatableTriggerWidget::StartActivation()
 
 			Player->SetInputMode(Mode);
 			Player->bShowMouseCursor = true;
+
+			Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->SetInputEnabled(false);
 
 			CurrentWidget->AddToViewport(2);
 		}

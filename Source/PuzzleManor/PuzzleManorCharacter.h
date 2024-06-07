@@ -19,6 +19,8 @@ public:
 	// Sets default values for this character's properties
 	APuzzleManorCharacter();
 
+	void SetInputEnabled(bool SetEnabled);
+
 protected:
 	void MoveFB(float Value);
 	void MoveRL(float Value);
@@ -64,4 +66,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float PitchSpeed = 3.0f;;
+
+	bool IsEnabled = true;
 };

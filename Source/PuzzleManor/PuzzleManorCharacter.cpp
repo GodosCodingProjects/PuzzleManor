@@ -13,23 +13,48 @@ APuzzleManorCharacter::APuzzleManorCharacter()
 	Camera->SetupAttachment(RootComponent);
 }
 
+void APuzzleManorCharacter::SetInputEnabled(bool SetEnabled)
+{
+	IsEnabled = SetEnabled;
+}
+
 void APuzzleManorCharacter::MoveFB(float Value)
 {
+	if (!IsEnabled)
+	{
+		return;
+	}
+
 	AddMovementInput(GetActorForwardVector(), Value * MoveSpeed);
 }
 
 void APuzzleManorCharacter::MoveRL(float Value)
 {
+	if (!IsEnabled)
+	{
+		return;
+	}
+
 	AddMovementInput(GetActorRightVector(), Value * MoveSpeed);
 }
 
 void APuzzleManorCharacter::Rotate(float Value)
 {
+	if (!IsEnabled)
+	{
+		return;
+	}
+
 	AddControllerYawInput(Value * RotSpeed);
 }
 
 void APuzzleManorCharacter::Pitch(float Value)
 {
+	if (!IsEnabled)
+	{
+		return;
+	}
+
 	Camera->AddRelativeRotation(FRotator(Value * PitchSpeed, 0.0f, 0.0f));
 	Camera->SetRelativeRotation(FRotator
 	(
@@ -41,14 +66,21 @@ void APuzzleManorCharacter::Pitch(float Value)
 
 void APuzzleManorCharacter::Interact(FKey key)
 {
-	if (ViewedActor)
+	if (!IsEnabled || !ViewedActor)
 	{
-		OnInteract.Broadcast(ViewedActor, ViewIntersection);
+		return;
 	}
+
+	OnInteract.Broadcast(ViewedActor, ViewIntersection);
 }
 
 void APuzzleManorCharacter::UpdateView()
 {
+	if (!IsEnabled)
+	{
+		return;
+	}
+
 	FHitResult hit;
 	GetWorld()->LineTraceSingleByChannel
 	(

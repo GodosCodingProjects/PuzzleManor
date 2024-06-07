@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Activatable.h"
+#include "Lookable.h"
+#include "WDead.h"
 
 #include "Soul.generated.h"
 
@@ -69,6 +71,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	AActor* CompleteActivatable;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UWDead> DeadWidgetClass;
+
 private:
 	enum SoulState {
 		Unknown,
@@ -80,4 +85,6 @@ private:
 	FVector DesiredPosition;
 
 	float TOLERANCE = 1.0f;
+
+	ULookable* Lookable;
 };

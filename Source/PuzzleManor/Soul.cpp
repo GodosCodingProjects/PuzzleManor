@@ -18,8 +18,11 @@ ASoul::ASoul()
 void ASoul::BeginPlay()
 {
 	Super::BeginPlay();
+
 	DesiredPosition = GetActorLocation();
 	SetActorTickEnabled(false);
+
+	Lookable = FindComponentByClass<ULookable>();
 }
 
 // Called every frame
@@ -77,7 +80,6 @@ void ASoul::StartActivation()
 	{
 		Player->OnInteract.AddUniqueDynamic(this, &ASoul::OnInteract);
 	}
-	
 
 	StartMove(WaitingPosition);
 }
@@ -116,11 +118,29 @@ void ASoul::IdentifySoul()
 		FName("CurrentColor"),
 		(State == Good) ? FLinearColor(0.f, 0.f, 1.f) : FLinearColor(1.f, 0.f, 0.f)
 	);
+
+	Lookable->Thoughts = (State == Good) ? 
+		"A Soul. It weighs no more than a feather. It has led a good life." : 
+		"A Soul. It weighs more than a feather. It has led a sinful life."
+	;
 }
 
 void ASoul::KillPlayer()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), FName(TEXT("ManorLevel")));
+	auto Player = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	auto CurrentWidget = CreateWidget<UWDead>(Player, DeadWidgetClass);
+
+	FInputModeGameAndUI Mode;
+	Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	Mode.SetHideCursorDuringCapture(false);
+	Mode.SetWidgetToFocus(CurrentWidget->GetCachedWidget());
+
+	Player->SetInputMode(Mode);
+	Player->bShowMouseCursor = true;
+
+	CurrentWidget->AddToViewport(2);
+
+	Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->SetInputEnabled(false);
 }
 
 void ASoul::SetCompleted()

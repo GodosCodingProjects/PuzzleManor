@@ -3,6 +3,7 @@
 
 #include "TriggerWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "PuzzleManorCharacter.h"
 #include "Activatable.h"
 
 
@@ -52,6 +53,8 @@ void UTriggerWidget::OnClose()
 	Player->SetInputMode(GameMode);
 	FSlateApplication::Get().SetAllUserFocusToGameViewport();
 	Player->bShowMouseCursor = false;
+
+	Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->SetInputEnabled(true);
 }
 
 void UTriggerWidget::Disable()
