@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "WMenu.h"
 
 #include "PuzzleManorCharacter.generated.h"
 
@@ -27,6 +28,7 @@ protected:
 	void Rotate(float Value);
 	void Pitch(float Value);
 	void Interact(FKey key);
+	void OpenMenu();
 
 	void UpdateView();
 
@@ -65,7 +67,10 @@ private:
 	float MinPitchAngle = -55.0f;
 
 	UPROPERTY(EditAnywhere)
-	float PitchSpeed = 3.0f;;
+	float PitchSpeed = 3.0f;
 
 	bool IsEnabled = true;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UWMenu> MenuClass;
 };

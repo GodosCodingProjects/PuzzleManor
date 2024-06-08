@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "PuzzleManorCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APuzzleManorCharacter::APuzzleManorCharacter()
@@ -74,6 +74,29 @@ void APuzzleManorCharacter::Interact(FKey key)
 	OnInteract.Broadcast(ViewedActor, ViewIntersection);
 }
 
+void APuzzleManorCharacter::OpenMenu()
+{
+	if (!IsEnabled)
+	{
+		return;
+	}
+
+	auto Player = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	auto CurrentWidget = CreateWidget<UWMenu>(Player, MenuClass);
+
+	FInputModeGameAndUI Mode;
+	Mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	Mode.SetHideCursorDuringCapture(false);
+	Mode.SetWidgetToFocus(CurrentWidget->GetCachedWidget());
+
+	Player->SetInputMode(Mode);
+	Player->bShowMouseCursor = true;
+
+	CurrentWidget->AddToViewport(2);
+
+	SetInputEnabled(false);
+}
+
 void APuzzleManorCharacter::UpdateView()
 {
 	if (!IsEnabled)
@@ -128,5 +151,6 @@ void APuzzleManorCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindAxis(TEXT("Rotate"), this, &APuzzleManorCharacter::Rotate);
 	PlayerInputComponent->BindAxis(TEXT("Pitch"), this, &APuzzleManorCharacter::Pitch);
 	PlayerInputComponent->BindAction(TEXT("Interact"), EInputEvent::IE_Pressed, this, &APuzzleManorCharacter::Interact);
+	PlayerInputComponent->BindAction(TEXT("OpenMenu"), EInputEvent::IE_Pressed, this, &APuzzleManorCharacter::OpenMenu);
 }
 
