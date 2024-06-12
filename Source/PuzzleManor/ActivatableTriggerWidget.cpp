@@ -23,6 +23,9 @@ void UActivatableTriggerWidget::StartActivation()
 		{
 			CurrentWidget = CreateWidget<UTriggerWidget>(Player, WidgetClasses[i]);
 			CurrentWidget->ActivatableActors = ActivatableActorsList[i].ActivatableActors;
+			CurrentWidget->SuccessSound = SuccessSound;
+			CurrentWidget->FailSound = FailSound;
+
 			++i;
 		}
 			
@@ -39,6 +42,23 @@ void UActivatableTriggerWidget::StartActivation()
 			Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->SetInputEnabled(false);
 
 			CurrentWidget->AddToViewport(2);
+		}
+	}
+}
+
+void UActivatableTriggerWidget::BeginPlay()
+{
+	auto Audios = SoundActor->GetComponents();
+
+	for (auto Audio : Audios)
+	{
+		if (Audio->GetName() == "SuccessAudio")
+		{
+			SuccessSound = Cast<UActivatableAudio>(Audio);
+		}
+		else if (Audio->GetName() == "FailAudio")
+		{
+			FailSound = Cast<UActivatableAudio>(Audio);
 		}
 	}
 }

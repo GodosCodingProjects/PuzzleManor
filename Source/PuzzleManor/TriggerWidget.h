@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "ActivatableAudio.h"
 
 #include "TriggerWidget.generated.h"
 
@@ -41,4 +42,7 @@ public:
 	TArray<AActor*> ActivatableActors;
 
 	bool IsSolved = false;
+
+	UActivatableAudio* SuccessSound;
+	UActivatableAudio* FailSound;
 };

@@ -40,6 +40,15 @@ void UTriggerWidget::OnSubmit()
 		}
 
 		Disable();
+
+		if (SuccessSound)
+		{
+			SuccessSound->StartActivation();
+		}
+	}
+	else if (FailSound)
+	{
+		FailSound->StartActivation();
 	}
 }
 

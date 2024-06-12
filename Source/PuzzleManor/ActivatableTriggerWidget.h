@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Activatable.h"
 #include "TriggerWidget.h"
+#include "ActivatableAudio.h"
 
 #include "ActivatableTriggerWidget.generated.h"
 
@@ -29,6 +30,8 @@ public:
 
 	virtual void StartActivation() override;
 
+	virtual void BeginPlay() override;
+
 public:
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<UTriggerWidget>> WidgetClasses;
@@ -36,7 +39,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<FActivatableActors> ActivatableActorsList;
 
+	UPROPERTY(EditAnywhere)
+	AActor* SoundActor;
+
 private:
 	UTriggerWidget* CurrentWidget;
 	size_t i;
+
+	UActivatableAudio* SuccessSound;
+	UActivatableAudio* FailSound;
 };
