@@ -32,8 +32,34 @@ void UFenceTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		}
 	}
 
+	if (nLitFires > LastCorrectAmount)
+	{
+		AddFlameSound->StartActivation();
+	}
+	else if (nLitFires < LastCorrectAmount)
+	{
+		RemoveFlameSound->StartActivation();
+	}
+
 	if (nLitFires == 6)
 	{
 		Trigger();
+	}
+}
+
+void UFenceTrigger::BeginPlay()
+{
+	auto Audios = SoundActor->GetComponents();
+
+	for (auto Audio : Audios)
+	{
+		if (Audio->GetName() == "AddFlameAudio")
+		{
+			AddFlameSound = Cast<UActivatableAudio>(Audio);
+		}
+		else if (Audio->GetName() == "RemoveFlameAudio")
+		{
+			RemoveFlameSound = Cast<UActivatableAudio>(Audio);
+		}
 	}
 }

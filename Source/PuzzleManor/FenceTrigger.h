@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Trigger.h"
 #include "FenceTrigger.generated.h"
+#include "ActivatableAudio.h"
 
 /**
  * 
@@ -17,12 +18,17 @@ class PUZZLEMANOR_API UFenceTrigger : public UTrigger
 public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
+	virtual void BeginPlay() override;
+
 public:
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> Flames;
 
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> Candles;
+
+	UPROPERTY(EditAnywhere)
+	AActor* SoundActor;
 
 private:
 	const TArray<int> ExpectedCandleRotations = {
@@ -33,4 +39,9 @@ private:
 		0,
 		1
 	};
+
+	int LastCorrectAmount;
+
+	UActivatableAudio* AddFlameSound;
+	UActivatableAudio* RemoveFlameSound;
 };
