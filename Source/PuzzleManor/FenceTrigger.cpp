@@ -41,6 +41,8 @@ void UFenceTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		RemoveFlameSound->StartActivation();
 	}
 
+	LastCorrectAmount = nLitFires;
+
 	if (nLitFires == 6)
 	{
 		Trigger();

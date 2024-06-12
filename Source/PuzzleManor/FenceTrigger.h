@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Trigger.h"
-#include "FenceTrigger.generated.h"
 #include "ActivatableAudio.h"
+
+#include "FenceTrigger.generated.h"
 
 /**
  * 
@@ -40,7 +41,7 @@ private:
 		1
 	};
 
-	int LastCorrectAmount;
+	int LastCorrectAmount = 1;
 
 	UActivatableAudio* AddFlameSound;
 	UActivatableAudio* RemoveFlameSound;
