@@ -20,4 +20,8 @@ public:
 	UActivatableAudio();
 
 	void StartActivation() override;
+
+public:
+	UPROPERTY(EditAnywhere)
+	bool IsStoppable = false;
 };

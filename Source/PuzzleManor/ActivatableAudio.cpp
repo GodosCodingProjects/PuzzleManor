@@ -10,5 +10,12 @@ UActivatableAudio::UActivatableAudio()
 
 void UActivatableAudio::StartActivation()
 {
-	Play();
+	if (IsStoppable && IsPlaying())
+	{
+		Stop();
+	}
+	else
+	{
+		Play();
+	}
 }
