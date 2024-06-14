@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Components/AudioComponent.h"
 #include "WMenu.h"
 
 #include "PuzzleManorCharacter.generated.h"
@@ -23,6 +24,8 @@ public:
 	void SetInputEnabled(bool SetEnabled);
 
 protected:
+	virtual void BeginPlay() override;
+
 	void MoveFB(float Value);
 	void MoveRL(float Value);
 	void Rotate(float Value);
@@ -73,4 +76,12 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UWMenu> MenuClass;
+
+	UAudioComponent* LeftStep;
+	UAudioComponent* RightStep;
+
+	UPROPERTY(EditAnywhere)
+	float StepDelay = 0.5f;
+	float StepCounter = 0.0f;
+	bool IsNextStepLeft = true;
 };

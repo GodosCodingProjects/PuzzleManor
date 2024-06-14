@@ -18,6 +18,25 @@ void APuzzleManorCharacter::SetInputEnabled(bool SetEnabled)
 	IsEnabled = SetEnabled;
 }
 
+void APuzzleManorCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	auto Audios = GetComponents();
+
+	for (auto Audio : Audios)
+	{
+		if (Audio->GetName() == "LeftStep")
+		{
+			LeftStep = Cast<UAudioComponent>(Audio);
+		}
+		else if (Audio->GetName() == "RightStep")
+		{
+			RightStep = Cast<UAudioComponent>(Audio);
+		}
+	}
+}
+
 void APuzzleManorCharacter::MoveFB(float Value)
 {
 	if (!IsEnabled)
@@ -139,6 +158,26 @@ void APuzzleManorCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	UpdateView();
+
+	if (!GetVelocity().IsZero())
+	{
+		StepCounter += DeltaTime;
+		if (StepCounter > StepDelay)
+		{
+			StepCounter -= StepDelay;
+
+			if (IsNextStepLeft)
+			{
+				LeftStep->Play();
+			}
+			else
+			{
+				RightStep->Play();
+			}
+
+			IsNextStepLeft = !IsNextStepLeft;
+		}
+	}
 }
 
 // Called to bind functionality to input
