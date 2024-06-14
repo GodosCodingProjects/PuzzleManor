@@ -23,6 +23,24 @@ void ASoul::BeginPlay()
 	SetActorTickEnabled(false);
 
 	Lookable = FindComponentByClass<ULookable>();
+
+	auto Audios = GetComponents();
+
+	for (auto Audio : Audios)
+	{
+		if (Audio->GetName() == "SuccessAudio")
+		{
+			SuccessAudio = Cast<UAudioComponent>(Audio);
+		}
+		else if (Audio->GetName() == "FailAudio")
+		{
+			FailAudio = Cast<UAudioComponent>(Audio);
+		}
+		else if (Audio->GetName() == "RevealAudio")
+		{
+			RevealAudio = Cast<UAudioComponent>(Audio);
+		}
+	}
 }
 
 // Called every frame
@@ -123,6 +141,8 @@ void ASoul::IdentifySoul()
 		"A Soul. It weighs no more than a feather. It has led a good life." : 
 		"A Soul. It weighs more than a feather. It has led a sinful life."
 	;
+
+	RevealAudio->Play();
 }
 
 void ASoul::KillPlayer()
@@ -141,6 +161,8 @@ void ASoul::KillPlayer()
 	CurrentWidget->AddToViewport(2);
 
 	Cast<APuzzleManorCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->SetInputEnabled(false);
+
+	FailAudio->Play();
 }
 
 void ASoul::SetCompleted()
@@ -154,6 +176,7 @@ void ASoul::SetCompleted()
 			Activatable->StartActivation();
 		}
 	}
+	SuccessAudio->Play();
 }
 
 FVector ASoul::ExpDecay(FVector a, FVector b, float decay, float dt)

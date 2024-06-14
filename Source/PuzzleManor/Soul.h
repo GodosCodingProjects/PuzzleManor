@@ -7,6 +7,7 @@
 #include "Activatable.h"
 #include "Lookable.h"
 #include "WDead.h"
+#include "Components/AudioComponent.h"
 
 #include "Soul.generated.h"
 
@@ -87,4 +88,8 @@ private:
 	float TOLERANCE = 1.0f;
 
 	ULookable* Lookable;
+
+	UAudioComponent* RevealAudio;
+	UAudioComponent* SuccessAudio;
+	UAudioComponent* FailAudio;
 };
