@@ -6,20 +6,20 @@
 void UActivatableDelayedTrigger::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetComponentTickEnabled(false);
 }
 
 void UActivatableDelayedTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	Timer += DeltaTime;
-	if (Timer >= Delay)
+	if (IsActivated)
 	{
-		SetComponentTickEnabled(false);
-
-		Trigger();
+		Timer += DeltaTime;
+		if (Timer >= Delay)
+		{
+			Trigger();
+			IsActivated = false;
+		}
 	}
 }
 
@@ -28,6 +28,5 @@ void UActivatableDelayedTrigger::StartActivation()
 	if (!IsActivated)
 	{
 		IsActivated = true;
-		SetComponentTickEnabled(true);
 	}
 }
