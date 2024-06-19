@@ -50,15 +50,16 @@ public:
 	FActorEventSignature OnViewStart;
 	FActorEventSignature OnViewEnd;
 
+public:
+	UPROPERTY(EditAnywhere)
+	UCameraComponent* Camera;
+
 private:
 	UPROPERTY(EditAnywhere)
 	float MoveSpeed = 10.0f;
 
 	UPROPERTY(EditAnywhere)
 	float RotSpeed = 1.0f;
-
-	UPROPERTY(EditAnywhere)
-	UCameraComponent* Camera;
 
 	UPROPERTY(EditAnywhere)
 	float MaxThoughtRange = 500.0f;
