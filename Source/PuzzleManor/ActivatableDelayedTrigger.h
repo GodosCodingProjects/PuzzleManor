@@ -16,8 +16,7 @@ class PUZZLEMANOR_API UActivatableDelayedTrigger : public UTrigger, public IActi
 {
 	GENERATED_BODY()
 
-	virtual void BeginPlay() override;
-
+public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	virtual void StartActivation() override;

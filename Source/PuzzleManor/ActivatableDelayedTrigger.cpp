@@ -3,11 +3,6 @@
 
 #include "ActivatableDelayedTrigger.h"
 
-void UActivatableDelayedTrigger::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 void UActivatableDelayedTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -28,5 +23,6 @@ void UActivatableDelayedTrigger::StartActivation()
 	if (!IsActivated)
 	{
 		IsActivated = true;
+		Timer = 0.0f;
 	}
 }
