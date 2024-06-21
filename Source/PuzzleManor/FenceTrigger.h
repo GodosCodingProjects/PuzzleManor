@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Trigger.h"
 #include "ActivatableAudio.h"
+#include "Activatable.h"
 
 #include "FenceTrigger.generated.h"
 
@@ -45,4 +46,7 @@ private:
 
 	UActivatableAudio* AddFlameSound;
 	UActivatableAudio* RemoveFlameSound;
+
+	UPROPERTY(EditAnywhere)
+	AActor* SecretActivatedActor;
 };

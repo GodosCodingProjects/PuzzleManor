@@ -47,6 +47,18 @@ void UFenceTrigger::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	{
 		Trigger();
 	}
+
+	if (nLitFires == 0 && !IsEnabled)
+	{
+		if (SecretActivatedActor)
+		{
+			auto Activatable = SecretActivatedActor->FindComponentByInterface(UActivatable::StaticClass());
+			if (Activatable)
+			{
+				Cast<IActivatable>(Activatable)->StartActivation();
+			}
+		}
+	}
 }
 
 void UFenceTrigger::BeginPlay()
